@@ -13,6 +13,7 @@
 		E311710C26011BE500339521 /* DiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E311710B26011BE500339521 /* DiceViewController.swift */; };
 		E31171172601204100339521 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31171162601204100339521 /* TabBarController.swift */; };
 		E311711B260125F400339521 /* DiceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E311711A260125F400339521 /* DiceCell.swift */; };
+		E311711E260128A700339521 /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E311711D260128A700339521 /* ResultCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		E311710B26011BE500339521 /* DiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceViewController.swift; sourceTree = "<group>"; };
 		E31171162601204100339521 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		E311711A260125F400339521 /* DiceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceCell.swift; sourceTree = "<group>"; };
+		E311711D260128A700339521 /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				E311711A260125F400339521 /* DiceCell.swift */,
+				E311711D260128A700339521 /* ResultCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 			files = (
 				E31170F52601196B00339521 /* AppDelegate.swift in Sources */,
 				E31171172601204100339521 /* TabBarController.swift in Sources */,
+				E311711E260128A700339521 /* ResultCell.swift in Sources */,
 				E311711B260125F400339521 /* DiceCell.swift in Sources */,
 				E31170F72601196B00339521 /* SceneDelegate.swift in Sources */,
 				E311710C26011BE500339521 /* DiceViewController.swift in Sources */,
