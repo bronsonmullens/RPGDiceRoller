@@ -27,7 +27,7 @@ class DiceViewController: UIViewController {
     }()
     
     // MOCK DATA
-    var diceBag = [4, 6, 8, 10, 12, 20, 100]
+    var diceBag = [3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 20, 24, 30, 100]
     
     // MARK: - Lifecycle
     
@@ -51,10 +51,10 @@ class DiceViewController: UIViewController {
         diceCollectionView.backgroundColor = .none
         
         NSLayoutConstraint.activate([
-            diceCollectionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 60),
+            diceCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             diceCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             diceCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            diceCollectionView.heightAnchor.constraint(equalToConstant: view.frame.height/2),
+            diceCollectionView.heightAnchor.constraint(equalToConstant: 300),
         ])
     }
     
@@ -71,6 +71,10 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: diceReuseIdentifier, for: indexPath) as? DiceCell else { return UICollectionViewCell() }
         cell.diceLabel.text = "\(diceBag[indexPath.row])"
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("\(diceBag[indexPath.row])")
     }
     
 }
