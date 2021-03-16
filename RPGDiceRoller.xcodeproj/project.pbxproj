@@ -9,21 +9,17 @@
 /* Begin PBXBuildFile section */
 		E31170F52601196B00339521 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31170F42601196B00339521 /* AppDelegate.swift */; };
 		E31170F72601196B00339521 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31170F62601196B00339521 /* SceneDelegate.swift */; };
-		E31170F92601196B00339521 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31170F82601196B00339521 /* ViewController.swift */; };
-		E31170FC2601196B00339521 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E31170FA2601196B00339521 /* Main.storyboard */; };
 		E31170FE2601196B00339521 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E31170FD2601196B00339521 /* Assets.xcassets */; };
-		E31171012601196B00339521 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E31170FF2601196B00339521 /* LaunchScreen.storyboard */; };
+		E311710C26011BE500339521 /* DiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E311710B26011BE500339521 /* DiceViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E31170F12601196B00339521 /* RPGDiceRoller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RPGDiceRoller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E31170F42601196B00339521 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E31170F62601196B00339521 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E31170F82601196B00339521 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E31170FB2601196B00339521 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E31170FD2601196B00339521 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E31171002601196B00339521 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E31171022601196B00339521 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E311710B26011BE500339521 /* DiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +52,29 @@
 		E31170F32601196B00339521 /* RPGDiceRoller */ = {
 			isa = PBXGroup;
 			children = (
-				E31170F42601196B00339521 /* AppDelegate.swift */,
-				E31170F62601196B00339521 /* SceneDelegate.swift */,
-				E31170F82601196B00339521 /* ViewController.swift */,
-				E31170FA2601196B00339521 /* Main.storyboard */,
+				E311710E26011CB400339521 /* Resources */,
+				E311711026011CDF00339521 /* View Controllers */,
 				E31170FD2601196B00339521 /* Assets.xcassets */,
-				E31170FF2601196B00339521 /* LaunchScreen.storyboard */,
-				E31171022601196B00339521 /* Info.plist */,
 			);
 			path = RPGDiceRoller;
+			sourceTree = "<group>";
+		};
+		E311710E26011CB400339521 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E31170F42601196B00339521 /* AppDelegate.swift */,
+				E31170F62601196B00339521 /* SceneDelegate.swift */,
+				E31171022601196B00339521 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E311711026011CDF00339521 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E311710B26011BE500339521 /* DiceViewController.swift */,
+			);
+			path = "View Controllers";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,9 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E31171012601196B00339521 /* LaunchScreen.storyboard in Resources */,
 				E31170FE2601196B00339521 /* Assets.xcassets in Resources */,
-				E31170FC2601196B00339521 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,32 +145,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E31170F92601196B00339521 /* ViewController.swift in Sources */,
 				E31170F52601196B00339521 /* AppDelegate.swift in Sources */,
 				E31170F72601196B00339521 /* SceneDelegate.swift in Sources */,
+				E311710C26011BE500339521 /* DiceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		E31170FA2601196B00339521 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E31170FB2601196B00339521 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		E31170FF2601196B00339521 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E31171002601196B00339521 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E31171032601196B00339521 /* Debug */ = {
@@ -288,7 +277,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JA7B9846WV;
-				INFOPLIST_FILE = RPGDiceRoller/Info.plist;
+				INFOPLIST_FILE = RPGDiceRoller/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,7 +296,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JA7B9846WV;
-				INFOPLIST_FILE = RPGDiceRoller/Info.plist;
+				INFOPLIST_FILE = RPGDiceRoller/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
