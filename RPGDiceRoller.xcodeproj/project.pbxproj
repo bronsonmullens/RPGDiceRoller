@@ -17,6 +17,7 @@
 		E3FC06C426015854007A4864 /* Dice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3FC06C226015854007A4864 /* Dice.xcdatamodeld */; };
 		E3FC06C826015A87007A4864 /* Dice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FC06C626015A87007A4864 /* Dice+CoreDataClass.swift */; };
 		E3FC06C926015A87007A4864 /* Dice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FC06C726015A87007A4864 /* Dice+CoreDataProperties.swift */; };
+		E3FC06CD26015B70007A4864 /* DiceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FC06CC26015B6F007A4864 /* DiceController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		E3FC06C326015854007A4864 /* Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Dice.xcdatamodel; sourceTree = "<group>"; };
 		E3FC06C626015A87007A4864 /* Dice+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dice+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E3FC06C726015A87007A4864 /* Dice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dice+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		E3FC06CC26015B6F007A4864 /* DiceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiceController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			children = (
 				E311710E26011CB400339521 /* Resources */,
 				E3FC06C12601583A007A4864 /* Model */,
+				E3FC06CB26015B58007A4864 /* Model Controller */,
 				E311711526011EDA00339521 /* Views */,
 				E311711026011CDF00339521 /* View Controllers */,
 				E31170FD2601196B00339521 /* Assets.xcassets */,
@@ -109,6 +112,14 @@
 				E3FC06C726015A87007A4864 /* Dice+CoreDataProperties.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		E3FC06CB26015B58007A4864 /* Model Controller */ = {
+			isa = PBXGroup;
+			children = (
+				E3FC06CC26015B6F007A4864 /* DiceController.swift */,
+			);
+			path = "Model Controller";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +198,7 @@
 				E3FC06C826015A87007A4864 /* Dice+CoreDataClass.swift in Sources */,
 				E31170F72601196B00339521 /* SceneDelegate.swift in Sources */,
 				E3FC06C426015854007A4864 /* Dice.xcdatamodeld in Sources */,
+				E3FC06CD26015B70007A4864 /* DiceController.swift in Sources */,
 				E311710C26011BE500339521 /* DiceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
