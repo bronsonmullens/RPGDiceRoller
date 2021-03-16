@@ -10,7 +10,8 @@ import UIKit
 class DiceViewController: UIViewController {
     
     override func viewDidLoad() {
-        view.backgroundColor = .systemRed
+        view.backgroundColor = .systemGray
+        self.title = "Dice Roller"
     }
     
 }
