@@ -181,12 +181,10 @@ class DiceViewController: UIViewController {
         let stepperValue = Int(modifierView.dicePoolStepper.value)
         amountToRoll = stepperValue
         modifierView.dicePoolLabel.text = "Amount Rolled: \(stepperValue)"
-        print(stepperValue)
     }
     
     @objc func advantageToggled() {
         advantage.toggle()
-        print(advantage)
     }
     
 }

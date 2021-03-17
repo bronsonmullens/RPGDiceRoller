@@ -26,7 +26,7 @@ class DiceController {
             result += roll
             count -= 1
         }
-        print("Result of \(amount)D\(sides) is: \(result).")
+        
         return result
     }
     
@@ -48,7 +48,7 @@ class DiceController {
             result2 += roll
             count -= 1
         }
-        print("Result 1: \(result1) and result 2: \(result2).")
+        
         if result1 > result2 {
             return result1
         } else {
