@@ -17,7 +17,7 @@ class DiceViewController: UIViewController {
     let rolledReuseIdentifier = "RolledCell"
     
     var recentRoll: String = ""
-    var rolledHistory: [String] = ["W", "E", "L", "C", "O", "M", "E",] {
+    var rolledHistory: [String] = ["R", "O", "L", "L","!"] {
         didSet {
             rolledCollectionView.reloadData()
         }
@@ -50,6 +50,8 @@ class DiceViewController: UIViewController {
         return layout
     }()
     
+    let resultView = ResultView()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -69,9 +71,9 @@ class DiceViewController: UIViewController {
     // MARK: - Autolayout
     
     func configureViews() {
-        view.backgroundColor = .systemGray
         view.addSubview(diceCollectionView)
         view.addSubview(rolledCollectionView)
+        view.addSubview(resultView)
         
         diceCollectionView.register(DiceCell.self,
                                     forCellWithReuseIdentifier: diceReuseIdentifier)
@@ -80,9 +82,11 @@ class DiceViewController: UIViewController {
         
         diceCollectionView.translatesAutoresizingMaskIntoConstraints = false
         rolledCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        resultView.translatesAutoresizingMaskIntoConstraints = false
         
         diceCollectionView.backgroundColor = .none
         rolledCollectionView.backgroundColor = .none
+        resultView.backgroundColor = .none
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDice))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(clearHistory))
@@ -91,12 +95,17 @@ class DiceViewController: UIViewController {
             diceCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             diceCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             diceCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            diceCollectionView.heightAnchor.constraint(equalToConstant: 300),
+            diceCollectionView.heightAnchor.constraint(equalToConstant: 400),
             
             rolledCollectionView.bottomAnchor.constraint(equalTo: diceCollectionView.topAnchor, constant: -16),
             rolledCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             rolledCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            rolledCollectionView.heightAnchor.constraint(equalToConstant: 48)
+            rolledCollectionView.heightAnchor.constraint(equalToConstant: 48),
+            
+            resultView.bottomAnchor.constraint(equalTo: rolledCollectionView.topAnchor, constant: -16),
+            resultView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            resultView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            resultView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
         ])
     }
     
@@ -184,7 +193,18 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
             rolledHistory.append(recentRoll)
             
             let lastRolled = IndexPath(row: rolledHistory.count-1, section: 0)
+            resultView.diceResultLabel.text = recentRoll
             rolledCollectionView.scrollToItem(at: lastRolled, at: .right, animated: true)
+            
+            if recentRoll == String(diceController.diceBag[indexPath.row].sides) {
+                resultView.diceResultLabel.textColor = .systemRed
+                UIView.animate(withDuration: 0.25) {
+                    self.resultView.diceResultLabel.transform = CGAffineTransform(scaleX: 2.50, y: 2.50)
+                    self.resultView.diceResultLabel.transform = .identity
+                }
+            } else {
+                resultView.diceResultLabel.textColor = .white
+            }
         }
     }
     

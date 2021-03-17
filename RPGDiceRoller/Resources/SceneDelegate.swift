@@ -18,6 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let _ = (scene as? UIWindowScene) else { return }
         
         guard let winScene = (scene as? UIWindowScene) else { return }
+        window?.overrideUserInterfaceStyle = .dark
         window = UIWindow(windowScene: winScene)
         window?.rootViewController = TabBarController()
         window?.makeKeyAndVisible()
