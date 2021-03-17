@@ -16,8 +16,9 @@ extension Dice {
         return NSFetchRequest<Dice>(entityName: "Dice")
     }
 
+    @NSManaged public var order: Int64
     @NSManaged public var name: String?
-    @NSManaged public var sides: Int16
+    @NSManaged public var sides: Int64
 
 }
 

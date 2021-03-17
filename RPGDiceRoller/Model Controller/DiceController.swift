@@ -76,7 +76,7 @@ class DiceController {
         
         let newDice = Dice(context: context)
         newDice.name = name
-        newDice.sides = Int16(sides)
+        newDice.sides = Int64(sides)
         
         do {
             try context.save()
