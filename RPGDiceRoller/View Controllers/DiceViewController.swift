@@ -89,7 +89,7 @@ class DiceViewController: UIViewController {
         modifierView.translatesAutoresizingMaskIntoConstraints = false
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDice))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(clearHistory))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .done, target: self, action: #selector(reset))
         modifierView.dicePoolStepper.addTarget(self, action: #selector(stepperChanged), for: .valueChanged)
         modifierView.dicePoolStepper.minimumValue = 1
         modifierView.advantageSwitch.addTarget(self, action: #selector(advantageToggled), for: .valueChanged)
@@ -166,8 +166,15 @@ class DiceViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    @objc func clearHistory() {
+    @objc func reset() {
         rolledHistory = []
+        resultView.diceResultLabel.text = "0"
+        resultView.diceResultLabel.textColor = .white
+        advantage = false
+        amountToRoll = 1
+        modifierView.advantageSwitch.isOn = false
+        modifierView.dicePoolStepper.value = 1
+        modifierView.dicePoolLabel.text = "Amount Rolled: 1"
     }
     
     @objc func stepperChanged() {
@@ -216,10 +223,14 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 cell.transform = CGAffineTransform(scaleX: 1.50, y: 1.50)
                 cell.transform = .identity
             }
-            let result: Int = diceController.roll(sides: Int(diceController.diceBag[indexPath.row].sides))
-            print(result)
+            var result: Int = 0
+            if advantage {
+                result = diceController.rollWithAdvantage(sides: Int(diceController.diceBag[indexPath.row].sides), amount: amountToRoll)
+            } else {
+                result = diceController.roll(sides: Int(diceController.diceBag[indexPath.row].sides), amount: amountToRoll)
+            }
             
-            recentRoll = String(diceController.roll(sides: Int(diceController.diceBag[indexPath.item].sides)))
+            recentRoll = String(result)
             rolledHistory.append(recentRoll)
             
             let lastRolled = IndexPath(row: rolledHistory.count-1, section: 0)

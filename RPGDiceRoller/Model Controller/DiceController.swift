@@ -18,14 +18,37 @@ class DiceController {
     
     // MARK: - Dice Methods
     
-    func roll(sides: Int) -> Int {
-        return Int.random(in: 1...sides)
+    func roll(sides: Int, amount: Int) -> Int {
+        var result: Int = 0
+        var count = amount
+        while count >= 1 {
+            let roll = Int.random(in: 1...sides)
+            result += roll
+            count -= 1
+        }
+        print("Result of \(amount)D\(sides) is: \(result).")
+        return result
     }
     
-    func rollWithAdvantage(sides: Int) -> Int {
-        let result1 = Int.random(in: 1...sides)
-        let result2 = Int.random(in: 1...sides)
+    func rollWithAdvantage(sides: Int, amount: Int) -> Int {
+        var result1 = 0
+        var result2 = 0
+        var count = amount
         
+        while count >= 1 {
+            let roll = Int.random(in: 1...sides)
+            result1 += roll
+            count -= 1
+        }
+        
+        count = amount
+        
+        while count >= 1 {
+            let roll = Int.random(in: 1...sides)
+            result2 += roll
+            count -= 1
+        }
+        print("Result 1: \(result1) and result 2: \(result2).")
         if result1 > result2 {
             return result1
         } else {
