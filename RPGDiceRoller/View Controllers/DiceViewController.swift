@@ -34,7 +34,7 @@ class DiceViewController: UIViewController {
         diceCollectionView.delegate = self
         diceCollectionView.dataSource = self
         view.backgroundColor = .systemGray
-        diceController.getAllItems()
+        diceController.getAllDice()
         configureViews()
         for die in diceController.diceBag {
             print("Your dice bag contains a: D\(die.sides)")
@@ -66,11 +66,32 @@ class DiceViewController: UIViewController {
     // MARK: - OBJC Methods
     
     @objc func addDie() {
-        print("Boop")
+        let alert = UIAlertController(title: "Add Dice",
+                                      message: "How many sides does your dice have?",
+                                      preferredStyle: .alert)
+        let saveAction = UIAlertAction(title: "Save",
+                                       style: .default){ (_) in
+            guard let field = alert.textFields?.first, let sides = field.text else { return }
+            self.diceController.createDice(name: "D\(sides)", sides: Int(sides) ?? 0)
+            DispatchQueue.main.async {
+                let indexPath = IndexPath(arrayLiteral: 0,self.diceController.diceBag.count-1)
+                self.diceCollectionView.insertItems(at: [indexPath])
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addTextField(configurationHandler: nil)
+        alert.textFields?.first?.keyboardType = .numberPad
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true, completion: nil)
     }
     
     @objc func removeAllDice() {
-        print("Beep")
+        diceController.deleteAllDice()
+        diceCollectionView.reloadData()
     }
     
 }

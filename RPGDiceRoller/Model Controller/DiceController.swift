@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class DiceController {
     
@@ -17,7 +18,7 @@ class DiceController {
     
     // MARK: - Methods
     
-    func getAllItems() {
+    func getAllDice() {
         do {
             let dice = try context.fetch(Dice.fetchRequest()) as! [Dice]
             diceBag = dice
@@ -26,26 +27,39 @@ class DiceController {
         }
     }
     
-    func createItem(name: String, sides: Int) {
+    func createDice(name: String, sides: Int) {
         let newDice = Dice(context: context)
         newDice.name = name
         newDice.sides = Int16(sides)
         
         do {
             try context.save()
-            getAllItems()
+            getAllDice()
         } catch {
-            NSLog("Error: Could not save dice: \(error.localizedDescription)")
+            NSLog("Error occured when attempt to save dice: \(error.localizedDescription)")
         }
     }
     
-    func deleteItem(dice: Dice) {
+    func deleteDice(dice: Dice) {
         context.delete(dice)
         
         do {
             try context.save()
         } catch {
-            NSLog("Error: Could not save dice: \(error.localizedDescription)")
+            NSLog("Error occured when attempt to save dice: \(error.localizedDescription)")
+        }
+    }
+    
+    func deleteAllDice() {
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Dice")
+        let request = NSBatchDeleteRequest(fetchRequest: fetch)
+        
+        do {
+        try context.execute(request)
+        try context.save()
+        getAllDice()
+        } catch {
+            NSLog("Error occured when deleting all saved dice. \(error.localizedDescription)")
         }
     }
     
