@@ -16,7 +16,24 @@ class DiceController {
     
     var diceBag: [Dice] = []
     
-    // MARK: - Methods
+    // MARK: - Dice Methods
+    
+    func roll(sides: Int) -> Int {
+        return Int.random(in: 1...sides)
+    }
+    
+    func rollWithAdvantage(sides: Int) -> Int {
+        let result1 = Int.random(in: 1...sides)
+        let result2 = Int.random(in: 1...sides)
+        
+        if result1 > result2 {
+            return result1
+        } else {
+            return result2
+        }
+    }
+    
+    // MARK: - CRUD Methods
     
     func getAllDice() {
         do {
@@ -27,7 +44,13 @@ class DiceController {
         }
     }
     
-    func createDice(name: String, sides: Int) {
+    func createDice(name: String, sides: Int) -> Bool {
+        for dice in diceBag {
+            if dice.sides == sides {
+                return false
+            }
+        }
+        
         let newDice = Dice(context: context)
         newDice.name = name
         newDice.sides = Int16(sides)
@@ -38,6 +61,7 @@ class DiceController {
         } catch {
             NSLog("Error occured when attempt to save dice: \(error.localizedDescription)")
         }
+        return true
     }
     
     func deleteDice(dice: Dice) {

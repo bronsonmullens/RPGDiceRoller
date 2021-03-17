@@ -50,9 +50,9 @@ class DiceViewController: UIViewController {
         
         diceCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
-        diceCollectionView.backgroundColor = .none
+        diceCollectionView.backgroundColor = .cyan
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDie))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDice))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(removeAllDice))
         
         NSLayoutConstraint.activate([
@@ -65,14 +65,26 @@ class DiceViewController: UIViewController {
     
     // MARK: - OBJC Methods
     
-    @objc func addDie() {
+    @objc func addDice() {
+        var diceCreated: Bool = false
         let alert = UIAlertController(title: "Add Dice",
                                       message: "How many sides does your dice have?",
                                       preferredStyle: .alert)
         let saveAction = UIAlertAction(title: "Save",
                                        style: .default){ (_) in
             guard let field = alert.textFields?.first, let sides = field.text else { return }
-            self.diceController.createDice(name: "D\(sides)", sides: Int(sides) ?? 0)
+            diceCreated = self.diceController.createDice(name: "D\(sides)", sides: Int(sides) ?? 0)
+            if !diceCreated {
+                let alert = UIAlertController(title: "Error",
+                                              message: "That dice already exists.",
+                                              preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok",
+                                           style: .default) { (_) in
+                    self.dismiss(animated: true, completion: nil)
+                }
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
             DispatchQueue.main.async {
                 let indexPath = IndexPath(arrayLiteral: 0,self.diceController.diceBag.count-1)
                 self.diceCollectionView.insertItems(at: [indexPath])
@@ -112,7 +124,8 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("\(diceController.diceBag[indexPath.row])")
+        let result: Int = diceController.roll(sides: Int(diceController.diceBag[indexPath.row].sides))
+        print(result)
     }
     
 }
