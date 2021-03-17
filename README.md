@@ -1,5 +1,5 @@
 # RPG Dice Roller
-#### A Powerful Dice Roller D&D and Other TTRPGS
+#### A Powerful Dice Roller for D&D and Other TTRPG's
 
 ## Features
 * Roll custom-sided dice
