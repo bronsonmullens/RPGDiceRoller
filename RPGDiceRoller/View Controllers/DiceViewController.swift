@@ -17,7 +17,7 @@ class DiceViewController: UIViewController {
     let rolledReuseIdentifier = "RolledCell"
     
     var recentRoll: String = ""
-    var rolledHistory: [String] = ["R", "O", "L", "L",] {
+    var rolledHistory: [String] = [] {
         didSet {
             rolledCollectionView.reloadData()
         }
@@ -56,6 +56,7 @@ class DiceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Dice Roller"
         diceCollectionView.delegate = self
         diceCollectionView.dataSource = self
         rolledCollectionView.delegate = self
@@ -81,10 +82,6 @@ class DiceViewController: UIViewController {
         rolledCollectionView.translatesAutoresizingMaskIntoConstraints = false
         resultView.translatesAutoresizingMaskIntoConstraints = false
         
-        diceCollectionView.backgroundColor = .none
-        rolledCollectionView.backgroundColor = .none
-        resultView.backgroundColor = .none
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDice))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(clearHistory))
         
@@ -102,12 +99,18 @@ class DiceViewController: UIViewController {
             resultView.bottomAnchor.constraint(equalTo: rolledCollectionView.topAnchor, constant: -16),
             resultView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             resultView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            resultView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            resultView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
         ])
     }
     
     func configureColors() {
         view.backgroundColor = UIColor(named: "Background")
+        navigationController?.navigationBar.barTintColor = UIColor(named: "Foreground")
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        navigationController?.navigationBar.tintColor = .white
+        diceCollectionView.backgroundColor = .gray
+        rolledCollectionView.backgroundColor = .gray
+        resultView.backgroundColor = .gray
     }
     
     // MARK: - OBJC Methods
@@ -203,7 +206,7 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     self.resultView.diceResultLabel.transform = .identity
                 }
             } else {
-                resultView.diceResultLabel.textColor = UIColor(named: "Foreground")
+                resultView.diceResultLabel.textColor = .white
             }
         }
     }

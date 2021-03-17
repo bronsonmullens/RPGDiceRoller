@@ -21,13 +21,13 @@ class ResultCell: UICollectionViewCell {
         resultLabel.font = UIFont(name: "Helvetica", size: 14)
         resultLabel.adjustsFontSizeToFitWidth = true
         resultLabel.textAlignment = .center
-        resultLabel.textColor = UIColor(named: "Foreground")
+        resultLabel.textColor = .white
         resultLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(resultLabel)
         
         self.backgroundColor = .none
         self.layer.cornerRadius = 12.0
-        self.layer.borderColor = UIColor(named: "Foreground")?.cgColor
+        self.layer.borderColor = UIColor.white.cgColor
         self.layer.borderWidth = 1.0
         self.layer.cornerRadius = 6.0
         self.translatesAutoresizingMaskIntoConstraints = false

@@ -21,15 +21,12 @@ class DiceCell: UICollectionViewCell {
         diceLabel.font = UIFont(name: "Helvetica", size: 32)
         diceLabel.adjustsFontSizeToFitWidth = true
         diceLabel.textAlignment = .center
-        diceLabel.textColor = UIColor(named: "Foreground")
+        diceLabel.textColor = .white
         diceLabel.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(diceLabel)
         
         self.backgroundColor = .none
-        self.layer.shadowColor = UIColor(named: "Foreground")?.cgColor
-        self.layer.shadowRadius = 3.0
-        self.layer.shadowOpacity = 1.0
-        self.layer.shadowOffset = CGSize(width: -3, height: 3)
+        self.layer.borderColor = UIColor.white.cgColor
         self.layer.cornerRadius = 12.0
         self.layer.borderWidth = 2.0
         self.layer.cornerRadius = 12.0

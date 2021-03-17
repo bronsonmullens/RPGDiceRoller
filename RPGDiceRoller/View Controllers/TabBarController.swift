@@ -18,6 +18,8 @@ class TabBarController: UITabBarController {
         let diceVC = createNavController(vc: DiceViewController(), imageName: "house", selectedImageName: "house.fill", title: "Home")
         
         viewControllers = [diceVC]
+        tabBar.barTintColor = UIColor(named: "Foreground")
+        tabBar.tintColor = .white
     }
 
 }
