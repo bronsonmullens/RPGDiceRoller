@@ -17,6 +17,8 @@ class DiceViewController: UIViewController {
     let rolledReuseIdentifier = "RolledCell"
     
     var recentRoll: String = ""
+    var advantage: Bool = false
+    var amountToRoll: Int = 1
     var rolledHistory: [String] = [] {
         didSet {
             rolledCollectionView.reloadData()
@@ -88,6 +90,9 @@ class DiceViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDice))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(clearHistory))
+        modifierView.dicePoolStepper.addTarget(self, action: #selector(stepperChanged), for: .valueChanged)
+        modifierView.dicePoolStepper.minimumValue = 1
+        modifierView.advantageSwitch.addTarget(self, action: #selector(advantageToggled), for: .valueChanged)
         
         NSLayoutConstraint.activate([
             modifierView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
@@ -163,6 +168,18 @@ class DiceViewController: UIViewController {
     
     @objc func clearHistory() {
         rolledHistory = []
+    }
+    
+    @objc func stepperChanged() {
+        let stepperValue = Int(modifierView.dicePoolStepper.value)
+        amountToRoll = stepperValue
+        modifierView.dicePoolLabel.text = "Amount Rolled: \(stepperValue)"
+        print(stepperValue)
+    }
+    
+    @objc func advantageToggled() {
+        advantage.toggle()
+        print(advantage)
     }
     
 }
