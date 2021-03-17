@@ -9,22 +9,44 @@ import UIKit
 
 class DiceController {
     
+    // MARK: - Properties
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
+    var diceBag: [Dice] = []
+    
+    // MARK: - Methods
+    
     func getAllItems() {
-        
+        do {
+            let dice = try context.fetch(Dice.fetchRequest()) as! [Dice]
+            diceBag = dice
+        } catch {
+            NSLog("Error: Could not load dice: \(error.localizedDescription)")
+        }
     }
     
     func createItem(name: String, sides: Int) {
+        let newDice = Dice(context: context)
+        newDice.name = name
+        newDice.sides = Int16(sides)
         
+        do {
+            try context.save()
+            getAllItems()
+        } catch {
+            NSLog("Error: Could not save dice: \(error.localizedDescription)")
+        }
     }
     
-    func deleteItem(name: Dice) {
+    func deleteItem(dice: Dice) {
+        context.delete(dice)
         
-    }
-    
-    func updateItem(name: Dice) {
-        
+        do {
+            try context.save()
+        } catch {
+            NSLog("Error: Could not save dice: \(error.localizedDescription)")
+        }
     }
     
 }

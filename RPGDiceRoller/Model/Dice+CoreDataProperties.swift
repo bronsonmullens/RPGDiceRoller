@@ -17,7 +17,7 @@ extension Dice {
     }
 
     @NSManaged public var name: String?
-    @NSManaged public var value: Int16
+    @NSManaged public var sides: Int16
 
 }
 

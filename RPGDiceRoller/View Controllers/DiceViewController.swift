@@ -11,6 +11,7 @@ class DiceViewController: UIViewController {
     
     // MARK: - Properties
     
+    let diceController = DiceController()
     let diceReuseIdentifier = "DiceCell"
     
     lazy var diceCollectionView: UICollectionView = {
@@ -26,9 +27,6 @@ class DiceViewController: UIViewController {
         return layout
     }()
     
-    // MOCK DATA
-    var diceBag = [3, 4, 5, 6, 7, 8, 10, 12, 14, 16, 20, 24, 30, 100]
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -36,7 +34,11 @@ class DiceViewController: UIViewController {
         diceCollectionView.delegate = self
         diceCollectionView.dataSource = self
         view.backgroundColor = .systemGray
+        diceController.getAllItems()
         configureViews()
+        for die in diceController.diceBag {
+            print("Your dice bag contains a: D\(die.sides)")
+        }
     }
     
     // MARK: - Autolayout
@@ -50,6 +52,9 @@ class DiceViewController: UIViewController {
         
         diceCollectionView.backgroundColor = .none
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDie))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(removeAllDice))
+        
         NSLayoutConstraint.activate([
             diceCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             diceCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -58,23 +63,35 @@ class DiceViewController: UIViewController {
         ])
     }
     
+    // MARK: - OBJC Methods
+    
+    @objc func addDie() {
+        print("Boop")
+    }
+    
+    @objc func removeAllDice() {
+        print("Beep")
+    }
+    
 }
 
     // MARK: - Collection View Delegate & Data Source Methods
 
 extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return diceBag.count
+        return diceController.diceBag.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: diceReuseIdentifier, for: indexPath) as? DiceCell else { return UICollectionViewCell() }
-        cell.diceLabel.text = "\(diceBag[indexPath.row])"
+        let dice = diceController.diceBag[indexPath.row]
+        cell.diceLabel.text = dice.name
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("\(diceBag[indexPath.row])")
+        print("\(diceController.diceBag[indexPath.row])")
     }
     
 }
