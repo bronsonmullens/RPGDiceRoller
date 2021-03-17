@@ -17,7 +17,7 @@ class DiceViewController: UIViewController {
     let rolledReuseIdentifier = "RolledCell"
     
     var recentRoll: String = ""
-    var rolledHistory: [String] = ["R", "O", "L", "L","!"] {
+    var rolledHistory: [String] = ["R", "O", "L", "L",] {
         didSet {
             rolledCollectionView.reloadData()
         }
@@ -62,10 +62,7 @@ class DiceViewController: UIViewController {
         rolledCollectionView.dataSource = self
         diceController.getAllDice()
         configureViews()
-        
-        for die in diceController.diceBag {
-            print("Your dice bag contains a: D\(die.sides)")
-        }
+        configureColors()
     }
     
     // MARK: - Autolayout
@@ -107,6 +104,10 @@ class DiceViewController: UIViewController {
             resultView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             resultView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
         ])
+    }
+    
+    func configureColors() {
+        view.backgroundColor = UIColor(named: "Background")
     }
     
     // MARK: - OBJC Methods
@@ -163,7 +164,6 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
         } else {
             return rolledHistory.count
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -203,7 +203,7 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
                     self.resultView.diceResultLabel.transform = .identity
                 }
             } else {
-                resultView.diceResultLabel.textColor = .white
+                resultView.diceResultLabel.textColor = UIColor(named: "Foreground")
             }
         }
     }

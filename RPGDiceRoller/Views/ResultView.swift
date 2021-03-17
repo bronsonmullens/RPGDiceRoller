@@ -31,7 +31,7 @@ class ResultView: UIView {
         diceResultLabel.text = "0"
         diceResultLabel.font = UIFont(name: "Helvetica", size: 60)
         diceResultLabel.textAlignment = .center
-        diceResultLabel.textColor = .white
+        diceResultLabel.textColor = UIColor(named: "Foreground")
         self.addSubview(diceResultLabel)
         diceResultLabel.translatesAutoresizingMaskIntoConstraints = false
         
