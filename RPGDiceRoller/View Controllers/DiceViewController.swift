@@ -12,11 +12,26 @@ class DiceViewController: UIViewController {
     // MARK: - Properties
     
     let diceController = DiceController()
+    let defaults = UserDefaults.standard
     let diceReuseIdentifier = "DiceCell"
+    let rolledReuseIdentifier = "RolledCell"
+    
+    var recentRoll: String = ""
+    var rolledHistory: [String] = ["W", "E", "L", "C", "O", "M", "E",] {
+        didSet {
+            rolledCollectionView.reloadData()
+        }
+    }
     
     lazy var diceCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: diceLayout)
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: diceReuseIdentifier)
+        return collectionView
+    }()
+    
+    lazy var rolledCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: view.frame, collectionViewLayout: rolledLayout)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: rolledReuseIdentifier)
         return collectionView
     }()
     
@@ -27,15 +42,25 @@ class DiceViewController: UIViewController {
         return layout
     }()
     
+    let rolledLayout: UICollectionViewFlowLayout = {
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        layout.itemSize = CGSize(width: 32, height: 32)
+        return layout
+    }()
+    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         diceCollectionView.delegate = self
         diceCollectionView.dataSource = self
-        view.backgroundColor = .systemGray
+        rolledCollectionView.delegate = self
+        rolledCollectionView.dataSource = self
         diceController.getAllDice()
         configureViews()
+        
         for die in diceController.diceBag {
             print("Your dice bag contains a: D\(die.sides)")
         }
@@ -44,13 +69,20 @@ class DiceViewController: UIViewController {
     // MARK: - Autolayout
     
     func configureViews() {
+        view.backgroundColor = .systemGray
         view.addSubview(diceCollectionView)
+        view.addSubview(rolledCollectionView)
         
-        diceCollectionView.register(DiceCell.self, forCellWithReuseIdentifier: diceReuseIdentifier)
+        diceCollectionView.register(DiceCell.self,
+                                    forCellWithReuseIdentifier: diceReuseIdentifier)
+        rolledCollectionView.register(ResultCell.self,
+                                      forCellWithReuseIdentifier: rolledReuseIdentifier)
         
         diceCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        rolledCollectionView.translatesAutoresizingMaskIntoConstraints = false
         
-        diceCollectionView.backgroundColor = .cyan
+        diceCollectionView.backgroundColor = .none
+        rolledCollectionView.backgroundColor = .none
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDice))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(removeAllDice))
@@ -60,6 +92,11 @@ class DiceViewController: UIViewController {
             diceCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             diceCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             diceCollectionView.heightAnchor.constraint(equalToConstant: 300),
+            
+            rolledCollectionView.bottomAnchor.constraint(equalTo: diceCollectionView.topAnchor, constant: -16),
+            rolledCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            rolledCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            rolledCollectionView.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
     
@@ -113,14 +150,27 @@ class DiceViewController: UIViewController {
 extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return diceController.diceBag.count
+        if collectionView == self.diceCollectionView {
+            return diceController.diceBag.count
+        } else {
+            return rolledHistory.count
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: diceReuseIdentifier, for: indexPath) as? DiceCell else { return UICollectionViewCell() }
-        let dice = diceController.diceBag[indexPath.row]
-        cell.diceLabel.text = dice.name
-        return cell
+        if collectionView == self.diceCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: diceReuseIdentifier, for: indexPath) as? DiceCell else { return UICollectionViewCell() }
+            let dice = diceController.diceBag[indexPath.row]
+            cell.diceLabel.text = dice.name
+            return cell
+        } else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: rolledReuseIdentifier, for: indexPath) as? ResultCell else { return UICollectionViewCell() }
+            print(indexPath)
+            cell.resultLabel.text = rolledHistory[indexPath.row]
+            return cell
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
