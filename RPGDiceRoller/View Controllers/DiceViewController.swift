@@ -51,6 +51,7 @@ class DiceViewController: UIViewController {
     }()
     
     let resultView = ResultView()
+    let modifierView = ModifierView()
     
     // MARK: - Lifecycle
     
@@ -64,6 +65,7 @@ class DiceViewController: UIViewController {
         diceController.getAllDice()
         configureViews()
         configureColors()
+        // diceController.deleteAllDice() // WARNING: DELETES ALL STORED DICE
     }
     
     // MARK: - Autolayout
@@ -72,6 +74,7 @@ class DiceViewController: UIViewController {
         view.addSubview(diceCollectionView)
         view.addSubview(rolledCollectionView)
         view.addSubview(resultView)
+        view.addSubview(modifierView)
         
         diceCollectionView.register(DiceCell.self,
                                     forCellWithReuseIdentifier: diceReuseIdentifier)
@@ -81,15 +84,21 @@ class DiceViewController: UIViewController {
         diceCollectionView.translatesAutoresizingMaskIntoConstraints = false
         rolledCollectionView.translatesAutoresizingMaskIntoConstraints = false
         resultView.translatesAutoresizingMaskIntoConstraints = false
+        modifierView.translatesAutoresizingMaskIntoConstraints = false
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDice))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(clearHistory))
         
         NSLayoutConstraint.activate([
-            diceCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            modifierView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
+            modifierView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            modifierView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            modifierView.heightAnchor.constraint(equalToConstant: 120),
+            
+            diceCollectionView.bottomAnchor.constraint(equalTo: modifierView.topAnchor, constant: -16),
             diceCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             diceCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            diceCollectionView.heightAnchor.constraint(equalToConstant: 400),
+            diceCollectionView.heightAnchor.constraint(equalToConstant: 340),
             
             rolledCollectionView.bottomAnchor.constraint(equalTo: diceCollectionView.topAnchor, constant: -16),
             rolledCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -108,9 +117,10 @@ class DiceViewController: UIViewController {
         navigationController?.navigationBar.barTintColor = UIColor(named: "Foreground")
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         navigationController?.navigationBar.tintColor = .white
-        diceCollectionView.backgroundColor = .gray
-        rolledCollectionView.backgroundColor = .gray
-        resultView.backgroundColor = .gray
+        diceCollectionView.backgroundColor = .none
+        rolledCollectionView.backgroundColor = .none
+        resultView.backgroundColor = .none
+        modifierView.backgroundColor = .none
     }
     
     // MARK: - OBJC Methods
