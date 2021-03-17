@@ -62,12 +62,13 @@ class DiceViewController: UIViewController {
         title = "Dice Roller"
         diceCollectionView.delegate = self
         diceCollectionView.dataSource = self
+        diceCollectionView.dragDelegate = self
+        diceCollectionView.dropDelegate = self
         rolledCollectionView.delegate = self
         rolledCollectionView.dataSource = self
         diceController.getAllDice()
         configureViews()
         configureColors()
-        // diceController.deleteAllDice() // WARNING: DELETES ALL STORED DICE
     }
     
     // MARK: - Autolayout
@@ -80,6 +81,7 @@ class DiceViewController: UIViewController {
         
         diceCollectionView.register(DiceCell.self,
                                     forCellWithReuseIdentifier: diceReuseIdentifier)
+        diceCollectionView.dragInteractionEnabled = true
         rolledCollectionView.register(ResultCell.self,
                                       forCellWithReuseIdentifier: rolledReuseIdentifier)
         
@@ -126,6 +128,22 @@ class DiceViewController: UIViewController {
         rolledCollectionView.backgroundColor = .none
         resultView.backgroundColor = .none
         modifierView.backgroundColor = .none
+    }
+    
+    // MARK: - Methods
+    
+    fileprivate func reorderItems(coordinator: UICollectionViewDropCoordinator, destinationIndexPath: IndexPath, collectionView: UICollectionView) {
+        if let item = coordinator.items.first,
+           let sourceIndexPath = item.sourceIndexPath {
+            collectionView.performBatchUpdates({
+                diceController.diceBag.remove(at: sourceIndexPath.item)
+                diceController.diceBag.insert(item.dragItem.localObject as! Dice, at: destinationIndexPath.item)
+                diceCollectionView.deleteItems(at: [sourceIndexPath])
+                diceCollectionView.insertItems(at: [destinationIndexPath])
+            }, completion: nil)
+            coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+            diceController.save()
+        }
     }
     
     // MARK: - OBJC Methods
@@ -243,6 +261,49 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 }
             } else {
                 resultView.diceResultLabel.textColor = .white
+            }
+        }
+    }
+    
+}
+
+extension DiceViewController: UICollectionViewDragDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        if collectionView == self.diceCollectionView {
+            let item = diceController.diceBag[indexPath.row]
+            let itemProvider = NSItemProvider(object: item.name! as NSString)
+            let dragItem = UIDragItem(itemProvider: itemProvider)
+            dragItem.localObject = item
+            return [dragItem]
+        } else {
+            return [UIDragItem]()
+        }
+    }
+    
+}
+
+extension DiceViewController: UICollectionViewDropDelegate, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+        if self.diceCollectionView.hasActiveDrag {
+            return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+        return UICollectionViewDropProposal(operation: .forbidden)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
+        if collectionView == self.diceCollectionView {
+            var destinationIndexPath: IndexPath
+            if let indexPath = coordinator.destinationIndexPath {
+                destinationIndexPath = indexPath
+            } else {
+                let row = self.diceCollectionView.numberOfItems(inSection: 0)
+                destinationIndexPath = IndexPath(item: row - 1, section: 0)
+            }
+            
+            if coordinator.proposal.operation == .move {
+                self.reorderItems(coordinator: coordinator, destinationIndexPath: destinationIndexPath, collectionView: collectionView)
             }
         }
     }

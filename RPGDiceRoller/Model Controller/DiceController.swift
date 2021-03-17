@@ -110,4 +110,12 @@ class DiceController {
         }
     }
     
+    func save() {
+        do {
+            try context.save()
+        } catch {
+            NSLog("Error occured when attempt to save dice: \(error.localizedDescription)")
+        }
+    }
+    
 }
