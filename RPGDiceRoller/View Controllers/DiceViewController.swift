@@ -85,7 +85,7 @@ class DiceViewController: UIViewController {
         rolledCollectionView.backgroundColor = .none
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDice))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(removeAllDice))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .done, target: self, action: #selector(clearHistory))
         
         NSLayoutConstraint.activate([
             diceCollectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
@@ -138,9 +138,8 @@ class DiceViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    @objc func removeAllDice() {
-        diceController.deleteAllDice()
-        diceCollectionView.reloadData()
+    @objc func clearHistory() {
+        rolledHistory = []
     }
     
 }
@@ -166,16 +165,27 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: rolledReuseIdentifier, for: indexPath) as? ResultCell else { return UICollectionViewCell() }
-            print(indexPath)
             cell.resultLabel.text = rolledHistory[indexPath.row]
             return cell
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let result: Int = diceController.roll(sides: Int(diceController.diceBag[indexPath.row].sides))
-        print(result)
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        if collectionView == self.diceCollectionView {
+            UIView.animate(withDuration: 0.15) {
+                cell.transform = CGAffineTransform(scaleX: 1.50, y: 1.50)
+                cell.transform = .identity
+            }
+            let result: Int = diceController.roll(sides: Int(diceController.diceBag[indexPath.row].sides))
+            print(result)
+            
+            recentRoll = String(diceController.roll(sides: Int(diceController.diceBag[indexPath.item].sides)))
+            rolledHistory.append(recentRoll)
+            
+            let lastRolled = IndexPath(row: rolledHistory.count-1, section: 0)
+            rolledCollectionView.scrollToItem(at: lastRolled, at: .right, animated: true)
+        }
     }
     
 }
