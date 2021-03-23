@@ -15,9 +15,11 @@ class TabBarController: UITabBarController {
     }
     
     func configureTabBar() {
-        let diceVC = createNavController(vc: DiceViewController(), imageName: "house", selectedImageName: "house.fill", title: "Home")
+        let diceVC = createNavController(vc: DiceViewController(), imageName: "cube", selectedImageName: "cube.fill", title: "Home")
+        let macrosVC = createNavController(vc: MacrosViewController(), imageName: "rectangle.stack", selectedImageName: "rectangle.stack.fill", title: "Macros")
+        let settingsVC = createNavController(vc: SettingsViewController(), imageName: "gearshape", selectedImageName: "gearshape.fill", title: "Settings")
         
-        viewControllers = [diceVC]
+        viewControllers = [diceVC, macrosVC, settingsVC]
         tabBar.barTintColor = UIColor(named: "Foreground")
         tabBar.tintColor = .white
     }
