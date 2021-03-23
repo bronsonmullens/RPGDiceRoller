@@ -210,11 +210,19 @@ class DiceViewController: UIViewController {
     
     @objc func advantageToggled() {
         advantage.toggle()
+        if advantage {
+            disadvantage = false
+            modifierView.disadvantageSwitch.isOn = false
+        }
         configureResultLabel()
     }
     
     @objc func disadvantageToggled() {
         disadvantage.toggle()
+        if disadvantage {
+            advantage = false
+            modifierView.advantageSwitch.isOn = false
+        }
         configureResultLabel()
     }
     
