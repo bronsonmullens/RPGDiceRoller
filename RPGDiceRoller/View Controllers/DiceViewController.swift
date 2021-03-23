@@ -99,6 +99,9 @@ class DiceViewController: UIViewController {
         modifierView.advantageSwitch.addTarget(self, action: #selector(advantageToggled), for: .valueChanged)
         modifierView.disadvantageSwitch.addTarget(self, action: #selector(disadvantageToggled), for: .valueChanged)
         
+        // Starts hidden
+        resultView.secondaryDiceResultLabel.isHidden = true
+        
         NSLayoutConstraint.activate([
             modifierView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
             modifierView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
@@ -118,7 +121,7 @@ class DiceViewController: UIViewController {
             resultView.bottomAnchor.constraint(equalTo: rolledCollectionView.topAnchor, constant: -16),
             resultView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             resultView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            resultView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
+            resultView.topAnchor.constraint(equalTo: view.topAnchor, constant: 132),
         ])
     }
     
@@ -134,7 +137,28 @@ class DiceViewController: UIViewController {
     }
     
     func configureResultLabel() {
-        print("Advantage: \(advantage) : Disadvantage: \(disadvantage)")
+        resultView.diceResultLabel.text = "0"
+        resultView.secondaryDiceResultLabel.text = "0"
+        
+        if !advantage && !disadvantage {
+            resultView.secondaryDiceResultLabel.isHidden = true
+            resultView.diceResultLabel.font = UIFont(name: "Helvetica", size: 60)
+            resultView.diceResultLabel.textColor = .white
+        } else {
+            resultView.secondaryDiceResultLabel.isHidden = false
+        }
+        
+        if advantage {
+            resultView.diceResultLabel.font = UIFont(name: "Helvetica", size: 60)
+            resultView.diceResultLabel.textColor = .systemGreen
+            resultView.secondaryDiceResultLabel.font = UIFont(name: "Helvetica", size: 32)
+            resultView.secondaryDiceResultLabel.textColor = .white
+        } else if disadvantage {
+            resultView.diceResultLabel.font = UIFont(name: "Helvetica", size: 32)
+            resultView.diceResultLabel.textColor = .white
+            resultView.secondaryDiceResultLabel.font = UIFont(name: "Helvetica", size: 60)
+            resultView.secondaryDiceResultLabel.textColor = .systemRed
+        }
     }
     
     // MARK: - Methods
@@ -256,33 +280,36 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         if collectionView == self.diceCollectionView {
-            UIView.animate(withDuration: 0.15) {
-                cell.transform = CGAffineTransform(scaleX: 1.50, y: 1.50)
-                cell.transform = .identity
-            }
-            var result: Int = 0
-            if advantage {
-                result = diceController.rollWithAdvantage(sides: Int(diceController.diceBag[indexPath.row].sides), amount: amountToRoll)
-            } else {
-                result = diceController.roll(sides: Int(diceController.diceBag[indexPath.row].sides), amount: amountToRoll)
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.15) {
+                    cell.transform = CGAffineTransform(scaleX: 1.50, y: 1.50)
+                    cell.transform = .identity
+                }
             }
             
-            recentRoll = String(result)
-            rolledHistory.append(recentRoll)
+            var results = [0,0]
+            var mainRoll = ""
+            
+            if advantage {
+                results = diceController.rollWithAdvantage(sides: Int(diceController.diceBag[indexPath.row].sides), amount: amountToRoll)
+                mainRoll = String(results[0])
+                resultView.diceResultLabel.text = String(results[0])
+                resultView.secondaryDiceResultLabel.text = String(results[1])
+            } else if disadvantage {
+                results = diceController.rollWithDisadvantage(sides: Int(diceController.diceBag[indexPath.row].sides), amount: amountToRoll)
+                mainRoll = String(results[1])
+                resultView.diceResultLabel.text = String(results[1])
+                resultView.secondaryDiceResultLabel.text = String(results[0])
+            } else {
+                results = diceController.roll(sides: Int(diceController.diceBag[indexPath.row].sides), amount: amountToRoll)
+                mainRoll = String(results[0])
+                resultView.diceResultLabel.text = String(results[0])
+            }
+            recentRoll = mainRoll
+            rolledHistory.append(mainRoll)
             
             let lastRolled = IndexPath(row: rolledHistory.count-1, section: 0)
-            resultView.diceResultLabel.text = recentRoll
             rolledCollectionView.scrollToItem(at: lastRolled, at: .right, animated: true)
-            
-            if recentRoll == String(diceController.diceBag[indexPath.row].sides) {
-                resultView.diceResultLabel.textColor = .systemRed
-                UIView.animate(withDuration: 0.25) {
-                    self.resultView.diceResultLabel.transform = CGAffineTransform(scaleX: 2.50, y: 2.50)
-                    self.resultView.diceResultLabel.transform = .identity
-                }
-            } else {
-                resultView.diceResultLabel.textColor = .white
-            }
         }
     }
     

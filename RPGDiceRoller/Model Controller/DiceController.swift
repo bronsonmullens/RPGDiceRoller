@@ -18,21 +18,22 @@ class DiceController {
     
     // MARK: - Dice Methods
     
-    func roll(sides: Int, amount: Int) -> Int {
-        var result: Int = 0
+    func roll(sides: Int, amount: Int) -> [Int] {
+        var result = [0,0]
         var count = amount
         while count >= 1 {
             let roll = Int.random(in: 1...sides)
-            result += roll
+            result[0] += roll
             count -= 1
         }
         
         return result
     }
     
-    func rollWithAdvantage(sides: Int, amount: Int) -> Int {
+    func rollWithAdvantage(sides: Int, amount: Int) -> [Int] {
         var result1 = 0
         var result2 = 0
+        var results = [0,0]
         var count = amount
         
         while count >= 1 {
@@ -50,15 +51,19 @@ class DiceController {
         }
         
         if result1 > result2 {
-            return result1
+            results[0] = result1
+            results[1] = result2
         } else {
-            return result2
+            results[0] = result2
+            results[1] = result1
         }
+        return results
     }
     
-    func rollWithDisadvantage(sides: Int, amount: Int) -> Int {
+    func rollWithDisadvantage(sides: Int, amount: Int) -> [Int] {
         var result1 = 0
         var result2 = 0
+        var results = [0,0]
         var count = amount
         
         while count >= 1 {
@@ -76,10 +81,13 @@ class DiceController {
         }
         
         if result1 < result2 {
-            return result1
+            results[1] = result1
+            results[0] = result2
         } else {
-            return result2
+            results[1] = result2
+            results[0] = result1
         }
+        return results
     }
     
     // MARK: - CRUD Methods
