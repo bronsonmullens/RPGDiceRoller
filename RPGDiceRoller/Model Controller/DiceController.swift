@@ -56,6 +56,32 @@ class DiceController {
         }
     }
     
+    func rollWithDisadvantage(sides: Int, amount: Int) -> Int {
+        var result1 = 0
+        var result2 = 0
+        var count = amount
+        
+        while count >= 1 {
+            let roll = Int.random(in: 1...sides)
+            result1 += roll
+            count -= 1
+        }
+        
+        count = amount
+        
+        while count >= 1 {
+            let roll = Int.random(in: 1...sides)
+            result2 += roll
+            count -= 1
+        }
+        
+        if result1 < result2 {
+            return result1
+        } else {
+            return result2
+        }
+    }
+    
     // MARK: - CRUD Methods
     
     func getAllDice() {
