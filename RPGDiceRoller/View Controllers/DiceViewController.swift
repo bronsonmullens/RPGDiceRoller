@@ -177,6 +177,13 @@ class DiceViewController: UIViewController {
         }
     }
     
+    func animateLabel(animate label: UILabel) {
+        UIView.animate(withDuration: 0.4) {
+            label.transform = CGAffineTransform(scaleX: 3, y: 3)
+            label.transform = .identity
+        }
+    }
+    
     // MARK: - OBJC Methods
     
     @objc func addDice() {
@@ -295,15 +302,24 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
                 mainRoll = String(results[0])
                 resultView.diceResultLabel.text = String(results[0])
                 resultView.secondaryDiceResultLabel.text = String(results[1])
+                if results[0] == diceController.diceBag[indexPath.row].sides {
+                    animateLabel(animate: resultView.diceResultLabel)
+                }
             } else if disadvantage {
                 results = diceController.rollWithDisadvantage(sides: Int(diceController.diceBag[indexPath.row].sides), amount: amountToRoll)
                 mainRoll = String(results[1])
-                resultView.diceResultLabel.text = String(results[1])
-                resultView.secondaryDiceResultLabel.text = String(results[0])
+                resultView.diceResultLabel.text = String(results[0])
+                resultView.secondaryDiceResultLabel.text = String(results[1])
+                if results[1] == diceController.diceBag[indexPath.row].sides {
+                    animateLabel(animate: resultView.secondaryDiceResultLabel)
+                }
             } else {
                 results = diceController.roll(sides: Int(diceController.diceBag[indexPath.row].sides), amount: amountToRoll)
                 mainRoll = String(results[0])
                 resultView.diceResultLabel.text = String(results[0])
+                if results[0] == diceController.diceBag[indexPath.row].sides {
+                    animateLabel(animate: resultView.diceResultLabel)
+                }
             }
             recentRoll = mainRoll
             rolledHistory.append(mainRoll)
