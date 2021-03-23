@@ -62,6 +62,7 @@ class SettingsViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         configureViews()
+        configureColors()
     }
     
     func configureViews() {
@@ -72,16 +73,19 @@ class SettingsViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 128),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        
+    }
+    
+    func configureColors() {
         view.backgroundColor = UIColor(named: "Background")
         navigationController?.navigationBar.barTintColor = UIColor(named: "Foreground")
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         navigationController?.navigationBar.tintColor = .white
+        tableView.backgroundColor = .none
     }
     
 }

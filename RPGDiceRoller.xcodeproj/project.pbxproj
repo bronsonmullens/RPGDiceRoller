@@ -16,6 +16,8 @@
 		E311711E260128A700339521 /* ResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E311711D260128A700339521 /* ResultCell.swift */; };
 		E3B1DC2726097CE000B23B19 /* MacrosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B1DC2626097CE000B23B19 /* MacrosViewController.swift */; };
 		E3B1DC2B26097CED00B23B19 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B1DC2A26097CED00B23B19 /* SettingsViewController.swift */; };
+		E3B1DC352609A69D00B23B19 /* SettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B1DC342609A69D00B23B19 /* SettingsHeaderView.swift */; };
+		E3B1DC392609AC5C00B23B19 /* AppVersionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B1DC382609AC5C00B23B19 /* AppVersionExtension.swift */; };
 		E3FC06C426015854007A4864 /* Dice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E3FC06C226015854007A4864 /* Dice.xcdatamodeld */; };
 		E3FC06C826015A87007A4864 /* Dice+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FC06C626015A87007A4864 /* Dice+CoreDataClass.swift */; };
 		E3FC06C926015A87007A4864 /* Dice+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FC06C726015A87007A4864 /* Dice+CoreDataProperties.swift */; };
@@ -36,6 +38,8 @@
 		E311711D260128A700339521 /* ResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCell.swift; sourceTree = "<group>"; };
 		E3B1DC2626097CE000B23B19 /* MacrosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacrosViewController.swift; sourceTree = "<group>"; };
 		E3B1DC2A26097CED00B23B19 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		E3B1DC342609A69D00B23B19 /* SettingsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsHeaderView.swift; sourceTree = "<group>"; };
+		E3B1DC382609AC5C00B23B19 /* AppVersionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionExtension.swift; sourceTree = "<group>"; };
 		E3FC06C326015854007A4864 /* Dice.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Dice.xcdatamodel; sourceTree = "<group>"; };
 		E3FC06C626015A87007A4864 /* Dice+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dice+CoreDataClass.swift"; sourceTree = "<group>"; };
 		E3FC06C726015A87007A4864 /* Dice+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dice+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -90,6 +94,7 @@
 				E31170F42601196B00339521 /* AppDelegate.swift */,
 				E31170F62601196B00339521 /* SceneDelegate.swift */,
 				E31171022601196B00339521 /* Info.plist */,
+				E3B1DC382609AC5C00B23B19 /* AppVersionExtension.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -108,12 +113,29 @@
 		E311711526011EDA00339521 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E3B1DC322609A66D00B23B19 /* Dice Roller */,
+				E3B1DC332609A68100B23B19 /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E3B1DC322609A66D00B23B19 /* Dice Roller */ = {
+			isa = PBXGroup;
+			children = (
 				E311711A260125F400339521 /* DiceCell.swift */,
 				E311711D260128A700339521 /* ResultCell.swift */,
 				E3FC06D02601CAB3007A4864 /* ResultView.swift */,
 				E3FC06D42601E954007A4864 /* ModifierView.swift */,
 			);
-			path = Views;
+			path = "Dice Roller";
+			sourceTree = "<group>";
+		};
+		E3B1DC332609A68100B23B19 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				E3B1DC342609A69D00B23B19 /* SettingsHeaderView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		E3FC06C12601583A007A4864 /* Model */ = {
@@ -210,10 +232,12 @@
 				E311711E260128A700339521 /* ResultCell.swift in Sources */,
 				E311711B260125F400339521 /* DiceCell.swift in Sources */,
 				E3FC06C826015A87007A4864 /* Dice+CoreDataClass.swift in Sources */,
+				E3B1DC392609AC5C00B23B19 /* AppVersionExtension.swift in Sources */,
 				E31170F72601196B00339521 /* SceneDelegate.swift in Sources */,
 				E3B1DC2B26097CED00B23B19 /* SettingsViewController.swift in Sources */,
 				E3FC06C426015854007A4864 /* Dice.xcdatamodeld in Sources */,
 				E3FC06CD26015B70007A4864 /* DiceController.swift in Sources */,
+				E3B1DC352609A69D00B23B19 /* SettingsHeaderView.swift in Sources */,
 				E3B1DC2726097CE000B23B19 /* MacrosViewController.swift in Sources */,
 				E311710C26011BE500339521 /* DiceViewController.swift in Sources */,
 			);
