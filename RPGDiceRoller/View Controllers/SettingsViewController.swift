@@ -53,6 +53,7 @@ class SettingsViewController: UIViewController {
                              sectionThree.count,]
     
     let tableView = UITableView(frame: CGRect(), style: .grouped)
+    let settingsHeaderView = SettingsHeaderView()
     
     // MARK: - Lifecycle
     
@@ -67,13 +68,20 @@ class SettingsViewController: UIViewController {
     
     func configureViews() {
         view.addSubview(tableView)
+        view.addSubview(settingsHeaderView)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "SettingCell")
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        settingsHeaderView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 300),
+            settingsHeaderView.topAnchor.constraint(equalTo: view.topAnchor, constant: 128),
+            settingsHeaderView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            settingsHeaderView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            settingsHeaderView.heightAnchor.constraint(equalToConstant: view.bounds.height/6),
+            
+            tableView.topAnchor.constraint(equalTo: settingsHeaderView.bottomAnchor, constant: 32),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
