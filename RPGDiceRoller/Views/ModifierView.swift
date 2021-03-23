@@ -12,13 +12,26 @@ class ModifierView: UIView {
     // MARK: - Properties
     
     var advantageSwitch: UISwitch = UISwitch()
+    var disadvantageSwitch: UISwitch = UISwitch()
     var dicePoolStepper: UIStepper = UIStepper()
     var advantageLabel: UILabel = UILabel()
+    var disadvantageLabel: UILabel = UILabel()
     var dicePoolLabel: UILabel = UILabel()
     
     lazy var advantageStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [advantageLabel,
                                                        advantageSwitch])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 8
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    lazy var disadvantageStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [disadvantageLabel,
+                                                       disadvantageSwitch])
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
@@ -48,6 +61,12 @@ class ModifierView: UIView {
         advantageLabel.textColor = .white
         self.addSubview(advantageStackView)
         
+        disadvantageLabel.text = "Disadvantage"
+        disadvantageLabel.font = UIFont(name: "Helvetica", size: 18)
+        disadvantageLabel.textAlignment = .center
+        disadvantageLabel.textColor = .white
+        self.addSubview(disadvantageStackView)
+        
         dicePoolLabel.text = "Amount Rolled: 1"
         dicePoolLabel.font = UIFont(name: "Helvetica", size: 18)
         dicePoolLabel.textAlignment = .center
@@ -55,11 +74,14 @@ class ModifierView: UIView {
         self.addSubview(dicePoolStackView)
         
         NSLayoutConstraint.activate([
-            advantageStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            advantageStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 4),
+            disadvantageStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            disadvantageStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 4),
             
             dicePoolStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            dicePoolStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -4),
+            dicePoolStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            
+            advantageStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            advantageStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -4)
         ])
     }
     

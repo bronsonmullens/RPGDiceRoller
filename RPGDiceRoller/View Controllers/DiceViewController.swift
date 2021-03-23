@@ -18,6 +18,7 @@ class DiceViewController: UIViewController {
     
     var recentRoll: String = ""
     var advantage: Bool = false
+    var disadvantage: Bool = false
     var amountToRoll: Int = 1
     var rolledHistory: [String] = [] {
         didSet {
@@ -67,6 +68,7 @@ class DiceViewController: UIViewController {
         rolledCollectionView.delegate = self
         rolledCollectionView.dataSource = self
         diceController.getAllDice()
+        // diceController.deleteAllDice()
         configureViews()
         configureColors()
     }
@@ -95,6 +97,7 @@ class DiceViewController: UIViewController {
         modifierView.dicePoolStepper.addTarget(self, action: #selector(stepperChanged), for: .valueChanged)
         modifierView.dicePoolStepper.minimumValue = 1
         modifierView.advantageSwitch.addTarget(self, action: #selector(advantageToggled), for: .valueChanged)
+        modifierView.disadvantageSwitch.addTarget(self, action: #selector(disadvantageToggled), for: .valueChanged)
         
         NSLayoutConstraint.activate([
             modifierView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -100),
@@ -128,6 +131,10 @@ class DiceViewController: UIViewController {
         rolledCollectionView.backgroundColor = .none
         resultView.backgroundColor = .none
         modifierView.backgroundColor = .none
+    }
+    
+    func configureResultLabel() {
+        print("Advantage: \(advantage) : Disadvantage: \(disadvantage)")
     }
     
     // MARK: - Methods
@@ -203,6 +210,12 @@ class DiceViewController: UIViewController {
     
     @objc func advantageToggled() {
         advantage.toggle()
+        configureResultLabel()
+    }
+    
+    @objc func disadvantageToggled() {
+        disadvantage.toggle()
+        configureResultLabel()
     }
     
 }

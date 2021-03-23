@@ -5,7 +5,15 @@
         <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sides" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Macro" representedClassName="Macro" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="modifier" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <relationship name="diceRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dice"/>
+    </entity>
     <elements>
         <element name="Dice" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="Macro" positionX="-54" positionY="18" width="128" height="104"/>
     </elements>
 </model>
