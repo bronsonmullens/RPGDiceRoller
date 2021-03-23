@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import StoreKit
 
 class SettingsViewController: UIViewController {
     
     // MARK: - Properties
+    
+    var diceController: DiceController?
     
     enum settings: String {
         case whatsNew = "🗞 What's New?"
@@ -96,6 +99,78 @@ class SettingsViewController: UIViewController {
         tableView.backgroundColor = .none
     }
     
+    // MARK: - Methods
+    
+    func whatsNew() {
+        let alert = UIAlertController(title: "\(UIApplication.appVersion!) Notes", message:
+                                        """
+                - App Release!
+                """
+                                      , preferredStyle: .alert)
+        let action = UIAlertAction(title: "Awesome!", style: .cancel, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+
+    func twitter() {
+        let screenName = "bronsonmullens"
+        let appURL = URL(string: "twitter://user?screen_name=\(screenName)")!
+        let webURL = URL(string: "https://twitter.com/\(screenName)")!
+
+        let application = UIApplication.shared
+
+           if application.canOpenURL(appURL as URL) {
+                application.open(appURL)
+           } else {
+                application.open(webURL)
+           }
+    }
+    
+    func tipJar() {
+        // TODO
+    }
+    
+    func helpfulTips() {
+        let helpMessage =
+        """
+        Begin by tapping the '+' symbol in the upper right corner. Add dice to your dice bag. Simply tap on your dice to roll them. Toggle on advantage or disadvantage when needed!
+        """
+        let alert = UIAlertController(title: "How to use this app",
+                                      message: helpMessage,
+                                      preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK",
+                                   style: .cancel,
+                                   handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true)
+    }
+
+    func feedback() {
+        let email: String = "bronsonmullens@icloud.com"
+        let alert = UIAlertController(title: "Submit Feedback", message: "Whether it's a bug report, feature request, or general feedback, I'd love to hear from you. Send me an email at \(email).", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .cancel, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+
+    func rateTheApp() {
+        SKStoreReviewController.requestReview()
+    }
+    
+    func privacyPolicy() {
+        let privacyPolicyURL = URL(string: "https://google.com")!
+        let application = UIApplication.shared
+        application.open(privacyPolicyURL)
+    }
+    
+    func deleteAllDice() {
+        diceController?.deleteAllDice()
+    }
+    
+    func deleteAllMacros() {
+        // TODO
+    }
+    
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -117,6 +192,32 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             cell.backgroundColor = UIColor(named: "Foreground")
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch staticSettings[indexPath.section][indexPath.row] {
+        case settings.whatsNew.rawValue:
+            whatsNew()
+        case settings.twitter.rawValue:
+            twitter()
+        case settings.tipJar.rawValue:
+            tipJar()
+        case settings.feedback.rawValue:
+            feedback()
+        case settings.rateTheApp.rawValue:
+            rateTheApp()
+        case settings.helpfulTips.rawValue:
+            helpfulTips()
+        case settings.privacyPolicy.rawValue:
+            privacyPolicy()
+        case settings.deleteAllDice.rawValue:
+            deleteAllDice()
+        case settings.deleteAllMacros.rawValue:
+            deleteAllMacros()
+        default:
+            NSLog("Error occured when attempting to select a settings option.")
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }
