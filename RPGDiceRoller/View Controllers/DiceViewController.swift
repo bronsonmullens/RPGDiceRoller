@@ -108,7 +108,7 @@ class DiceViewController: UIViewController {
             diceCollectionView.bottomAnchor.constraint(equalTo: modifierView.topAnchor, constant: -16),
             diceCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             diceCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            diceCollectionView.heightAnchor.constraint(equalToConstant: 340),
+            diceCollectionView.heightAnchor.constraint(equalToConstant: 300),
             
             rolledCollectionView.bottomAnchor.constraint(equalTo: diceCollectionView.topAnchor, constant: -16),
             rolledCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),

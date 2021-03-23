@@ -13,6 +13,18 @@ class ResultView: UIView {
     
     var resultLabel: UILabel = UILabel()
     var diceResultLabel: UILabel = UILabel()
+    var secondaryDiceResultLabel: UILabel = UILabel()
+    
+    lazy var resultStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [diceResultLabel,
+                                                       secondaryDiceResultLabel])
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 32
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
     // MARK: - Initializiers
     
@@ -32,17 +44,25 @@ class ResultView: UIView {
         diceResultLabel.font = UIFont(name: "Helvetica", size: 60)
         diceResultLabel.textAlignment = .center
         diceResultLabel.textColor = .white
-        self.addSubview(diceResultLabel)
         diceResultLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        // Optional second label for rolls with advantage/disadvantage
+        secondaryDiceResultLabel.text = "0"
+        secondaryDiceResultLabel.font = UIFont(name: "Helvetica", size: 60)
+        secondaryDiceResultLabel.textAlignment = .center
+        secondaryDiceResultLabel.textColor = .white
+        secondaryDiceResultLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.addSubview(resultStackView)
         
         NSLayoutConstraint.activate([
             resultLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
             resultLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
             resultLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
             
-            diceResultLabel.topAnchor.constraint(equalTo: resultLabel.bottomAnchor, constant: 8),
-            diceResultLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
-            diceResultLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
+            resultStackView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            resultStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            resultStackView.topAnchor.constraint(equalTo: resultLabel.bottomAnchor, constant: 8),
         ])
     }
     
