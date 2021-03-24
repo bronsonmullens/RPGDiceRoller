@@ -93,7 +93,7 @@ class DiceViewController: UIViewController, DiceControllerDelegate {
         resultView.translatesAutoresizingMaskIntoConstraints = false
         modifierView.translatesAutoresizingMaskIntoConstraints = false
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Create Dice", style: .plain, target: self, action: #selector(addDice))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDice))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(reset))
         modifierView.dicePoolStepper.addTarget(self, action: #selector(stepperChanged), for: .valueChanged)
         modifierView.dicePoolStepper.minimumValue = 1
