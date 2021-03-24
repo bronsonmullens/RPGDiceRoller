@@ -8,13 +8,18 @@
 import UIKit
 import CoreData
 
+protocol DiceControllerDelegate {
+    func diceWereDeleted()
+}
+
 class DiceController {
     
     // MARK: - Properties
     
+    static let shared = DiceController()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
     var diceBag: [Dice] = []
+    var delegate: DiceControllerDelegate?
     
     // MARK: - Dice Methods
     
@@ -136,9 +141,10 @@ class DiceController {
         let request = NSBatchDeleteRequest(fetchRequest: fetch)
         
         do {
-        try context.execute(request)
-        try context.save()
-        getAllDice()
+            try context.execute(request)
+            try context.save()
+            getAllDice()
+            delegate?.diceWereDeleted()
         } catch {
             NSLog("Error occured when deleting all saved dice. \(error.localizedDescription)")
         }

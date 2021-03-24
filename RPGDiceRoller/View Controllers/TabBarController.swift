@@ -7,10 +7,11 @@
 
 import UIKit
 
-class TabBarController: UITabBarController {
+class TabBarController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         view.backgroundColor = .systemBlue
+        self.delegate = self
         configureTabBar()
     }
     

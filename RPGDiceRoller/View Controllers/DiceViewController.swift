@@ -7,11 +7,11 @@
 
 import UIKit
 
-class DiceViewController: UIViewController {
+class DiceViewController: UIViewController, DiceControllerDelegate {
     
     // MARK: - Properties
     
-    let diceController = DiceController()
+    let diceController = DiceController.shared
     let defaults = UserDefaults.standard
     let diceReuseIdentifier = "DiceCell"
     let rolledReuseIdentifier = "RolledCell"
@@ -67,6 +67,7 @@ class DiceViewController: UIViewController {
         diceCollectionView.dropDelegate = self
         rolledCollectionView.delegate = self
         rolledCollectionView.dataSource = self
+        diceController.delegate = self
         diceController.getAllDice()
         // diceController.deleteAllDice()
         configureViews()
@@ -184,6 +185,12 @@ class DiceViewController: UIViewController {
         }
     }
     
+    // MARK: - Dice Controller Delegate Methods
+    
+    func diceWereDeleted() {
+        reset()
+    }
+    
     // MARK: - OBJC Methods
     
     @objc func addDice() {
@@ -223,12 +230,14 @@ class DiceViewController: UIViewController {
     }
     
     @objc func reset() {
+        diceCollectionView.reloadData()
         rolledHistory = []
-        resultView.diceResultLabel.text = "0"
-        resultView.diceResultLabel.textColor = .white
         advantage = false
+        disadvantage = false
+        configureResultLabel()
         amountToRoll = 1
         modifierView.advantageSwitch.isOn = false
+        modifierView.disadvantageSwitch.isOn = false
         modifierView.dicePoolStepper.value = 1
         modifierView.dicePoolLabel.text = "Amount Rolled: 1"
     }
@@ -330,6 +339,8 @@ extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
 }
+
+// MARK: - Drag Delegate Methods
 
 extension DiceViewController: UICollectionViewDragDelegate {
     

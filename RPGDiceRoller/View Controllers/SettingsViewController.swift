@@ -12,7 +12,7 @@ class SettingsViewController: UIViewController {
     
     // MARK: - Properties
     
-    var diceController: DiceController?
+    let diceController = DiceController.shared
     
     enum settings: String {
         case whatsNew = "🗞 What's New?"
@@ -164,7 +164,7 @@ class SettingsViewController: UIViewController {
     }
     
     func deleteAllDice() {
-        diceController?.deleteAllDice()
+        diceController.deleteAllDice()
     }
     
     func deleteAllMacros() {
@@ -172,6 +172,7 @@ class SettingsViewController: UIViewController {
     }
     
 }
+
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
