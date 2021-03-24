@@ -94,7 +94,7 @@ class DiceViewController: UIViewController, DiceControllerDelegate {
         modifierView.translatesAutoresizingMaskIntoConstraints = false
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addDice))
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(reset))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Clear", style: .plain, target: self, action: #selector(clear))
         modifierView.dicePoolStepper.addTarget(self, action: #selector(stepperChanged), for: .valueChanged)
         modifierView.dicePoolStepper.minimumValue = 1
         modifierView.advantageSwitch.addTarget(self, action: #selector(advantageToggled), for: .valueChanged)
@@ -187,7 +187,9 @@ class DiceViewController: UIViewController, DiceControllerDelegate {
     
     func emptyDiceBagCheck() {
         if diceController.diceBag.isEmpty {
-            let alert = UIAlertController(title: "Your dice bag is empty!", message: "Would you like to fill your dice bag automatically with a standard array of RPG Dice?", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Your dice bag is empty!",
+                                          message: "Would you like to fill your dice bag automatically with a standard array of RPG Dice?",
+                                          preferredStyle: .alert)
             let confirmAction = UIAlertAction(title: "Yes!", style: .default) { (_) in
                 let d4 = self.diceController.createDice(name: "D4", sides: 4)
                 let d6 = self.diceController.createDice(name: "D6", sides: 6)
@@ -217,7 +219,7 @@ class DiceViewController: UIViewController, DiceControllerDelegate {
     // MARK: - Dice Controller Delegate Methods
     
     func diceWereDeleted() {
-        reset()
+        clear()
     }
     
     // MARK: - OBJC Methods
@@ -258,7 +260,7 @@ class DiceViewController: UIViewController, DiceControllerDelegate {
         present(alert, animated: true, completion: nil)
     }
     
-    @objc func reset() {
+    @objc func clear() {
         diceCollectionView.reloadData()
         rolledHistory = []
         advantage = false

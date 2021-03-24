@@ -71,6 +71,9 @@ class ModifierView: UIView {
         dicePoolLabel.font = UIFont(name: "Helvetica", size: 18)
         dicePoolLabel.textAlignment = .center
         dicePoolLabel.textColor = .white
+        dicePoolStepper.backgroundColor = UIColor(named: "Foreground")
+        dicePoolStepper.tintColor = .white
+        dicePoolStepper.layer.cornerRadius = 12
         self.addSubview(dicePoolStackView)
         
         NSLayoutConstraint.activate([

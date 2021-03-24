@@ -28,7 +28,7 @@ class DiceCell: UICollectionViewCell {
         self.backgroundColor = .none
         self.layer.borderColor = UIColor.white.cgColor
         self.layer.cornerRadius = 12.0
-        self.layer.borderWidth = 2.0
+        self.layer.borderWidth = 3.0
         self.layer.cornerRadius = 12.0
         self.translatesAutoresizingMaskIntoConstraints = false
         

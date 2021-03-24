@@ -23,6 +23,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         viewControllers = [diceVC, macrosVC, settingsVC]
         tabBar.barTintColor = UIColor(named: "Foreground")
         tabBar.tintColor = .white
+        tabBar.unselectedItemTintColor = UIColor(named: "Background")
     }
 
 }
