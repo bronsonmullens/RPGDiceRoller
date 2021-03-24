@@ -69,9 +69,9 @@ class DiceViewController: UIViewController, DiceControllerDelegate {
         rolledCollectionView.dataSource = self
         diceController.delegate = self
         diceController.getAllDice()
-        // diceController.deleteAllDice()
         configureViews()
         configureColors()
+        emptyDiceBagCheck()
     }
     
     // MARK: - Autolayout
@@ -180,8 +180,37 @@ class DiceViewController: UIViewController, DiceControllerDelegate {
     
     func animateLabel(animate label: UILabel) {
         UIView.animate(withDuration: 0.4) {
-            label.transform = CGAffineTransform(scaleX: 3, y: 3)
+            label.transform = CGAffineTransform(scaleX: 6, y: 6)
             label.transform = .identity
+        }
+    }
+    
+    func emptyDiceBagCheck() {
+        if diceController.diceBag.isEmpty {
+            let alert = UIAlertController(title: "Your dice bag is empty!", message: "Would you like to fill your dice bag automatically with a standard array of RPG Dice?", preferredStyle: .alert)
+            let confirmAction = UIAlertAction(title: "Yes!", style: .default) { (_) in
+                let d4 = self.diceController.createDice(name: "D4", sides: 4)
+                let d6 = self.diceController.createDice(name: "D6", sides: 6)
+                let d8 = self.diceController.createDice(name: "D8", sides: 8)
+                let d10 = self.diceController.createDice(name: "D10", sides: 10)
+                let d12 = self.diceController.createDice(name: "D12", sides: 12)
+                let d20 = self.diceController.createDice(name: "D20", sides: 20)
+                let d100 = self.diceController.createDice(name: "D100", sides: 100)
+                
+                if d4, d6, d8, d10, d12, d20, d100 {
+                    DispatchQueue.main.async {
+                        let indexPath = IndexPath(arrayLiteral: 0,self.diceController.diceBag.count-1)
+                        self.diceCollectionView.insertItems(at: [indexPath])
+                    }
+                }
+            }
+            
+            let denyAction = UIAlertAction(title: "Nah, I'll do it the hard way.", style: .cancel) { (_) in
+                NSLog("User did not add default dice.")
+            }
+            alert.addAction(confirmAction)
+            alert.addAction(denyAction)
+            present(alert, animated: true, completion: nil)
         }
     }
     
@@ -207,7 +236,7 @@ class DiceViewController: UIViewController, DiceControllerDelegate {
                                               message: "That dice already exists.",
                                               preferredStyle: .alert)
                 let okAction = UIAlertAction(title: "Ok",
-                                           style: .default) { (_) in
+                                             style: .default) { (_) in
                     self.dismiss(animated: true, completion: nil)
                 }
                 alert.addAction(okAction)
@@ -268,7 +297,7 @@ class DiceViewController: UIViewController, DiceControllerDelegate {
     
 }
 
-    // MARK: - Collection View Delegate & Data Source Methods
+// MARK: - Collection View Delegate & Data Source Methods
 
 extension DiceViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
