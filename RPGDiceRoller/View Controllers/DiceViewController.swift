@@ -11,7 +11,7 @@ class DiceViewController: UIViewController, DiceControllerDelegate {
     
     // MARK: - Properties
     
-    let diceController = DiceController.shared
+    var diceController = DiceController.shared
     let defaults = UserDefaults.standard
     let diceReuseIdentifier = "DiceCell"
     let rolledReuseIdentifier = "RolledCell"

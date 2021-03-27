@@ -10,7 +10,7 @@
 #### Images coming soon!™
 
 ## ⭐️ Found this repository useful? ⭐️ 
-Why not [star the project](https://github.com/bronsonmullens/Just-Flip-It/stargazers)?
+Why not [star the project](https://github.com/bronsonmullens/RPGDiceRoller/stargazers)?
 
 ## License
 [This project is licensed under the MIT license.](https://tldrlegal.com/license/mit-license)

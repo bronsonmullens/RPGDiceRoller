@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D74" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Dice" representedClassName="Dice" syncable="YES">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="BaggedDice" representedClassName="BaggedDice" syncable="YES" codeGenerationType="class"/>
+    <entity name="Dice" representedClassName="Dice" syncable="YES" codeGenerationType="class">
         <attribute name="name" attributeType="String"/>
-        <attribute name="order" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="sides" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="macroDice" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MacroDice" inverseName="dice" inverseEntity="MacroDice"/>
     </entity>
     <entity name="Macro" representedClassName="Macro" syncable="YES" codeGenerationType="class">
         <attribute name="amount" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isFavorite" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="modifier" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="diceRelationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Dice"/>
+    </entity>
+    <entity name="MacroDice" representedClassName="MacroDice" syncable="YES" codeGenerationType="class">
+        <relationship name="dice" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dice" inverseName="macroDice" inverseEntity="Dice"/>
     </entity>
     <elements>
-        <element name="Dice" positionX="-63" positionY="-18" width="128" height="74"/>
-        <element name="Macro" positionX="-54" positionY="18" width="128" height="104"/>
+        <element name="Dice" positionX="-127.8984375" positionY="94.56640625" width="128" height="74"/>
+        <element name="Macro" positionX="-124.83984375" positionY="293.48828125" width="128" height="89"/>
+        <element name="MacroDice" positionX="-126" positionY="225" width="128" height="44"/>
+        <element name="BaggedDice" positionX="-117" positionY="234" width="128" height="29"/>
     </elements>
 </model>

@@ -12,7 +12,7 @@ class SettingsViewController: UIViewController {
     
     // MARK: - Properties
     
-    let diceController = DiceController.shared
+    var diceController = DiceController.shared
     
     enum settings: String {
         case whatsNew = "🗞 What's New?"

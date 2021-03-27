@@ -19,6 +19,7 @@ class DiceController {
     static let shared = DiceController()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var diceBag: [Dice] = []
+    var macros: [Macro] = []
     var delegate: DiceControllerDelegate?
     
     // MARK: - Dice Methods
@@ -126,6 +127,25 @@ class DiceController {
         return true
     }
     
+    func createMacro(title: String, amount: Int, modifier: Int, isFavorite: Bool, dice: [Dice]) {
+        let newMacro = Macro(context: context)
+        newMacro.title = title
+        newMacro.amount = Int64(amount)
+        newMacro.modifier = Int64(modifier)
+        newMacro.isFavorite = isFavorite
+        for die in dice {
+            newMacro.addToDice(die)
+        }
+        macros.append(newMacro)
+        
+        do {
+            try context.save()
+            getAllDice()
+        } catch {
+            NSLog("Error occured when attempt to save dice: \(error.localizedDescription)")
+        }
+    }
+    
     func deleteDice(dice: Dice) {
         context.delete(dice)
         
@@ -147,6 +167,20 @@ class DiceController {
             delegate?.diceWereDeleted()
         } catch {
             NSLog("Error occured when deleting all saved dice. \(error.localizedDescription)")
+        }
+    }
+    
+    func deleteAllMacros() {
+        let fetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Macro")
+        let request = NSBatchDeleteRequest(fetchRequest: fetch)
+        
+        do {
+            try context.execute(request)
+            try context.save()
+            getAllDice()
+            delegate?.diceWereDeleted()
+        } catch {
+            NSLog("Error occured when deleting all saved macros. \(error.localizedDescription)")
         }
     }
     
